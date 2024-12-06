@@ -17,7 +17,17 @@ all wrapped up in a tasty [Docker](https://www.docker.com) container.
 
 ## Running ##
 
+<<<<<<< HEAD
 Consider using a `docker-compose.yml` file to run Certboto.
+=======
+### Running with Docker ###
+
+To run the `cisagov/example` image via Docker:
+
+```console
+docker run cisagov/example:0.2.0
+```
+>>>>>>> 0d48ebd47a28a887868ea3093e675e95f3843561
 
 ### Running with Docker Compose ###
 
@@ -32,10 +42,19 @@ Consider using a `docker-compose.yml` file to run Certboto.
         file: /home/username/.aws/credentials
 
     services:
+<<<<<<< HEAD
       certboto:
         image: cisagov/certboto
         init: true
         restart: "no"
+=======
+      example:
+        image: cisagov/example:0.2.0
+        volumes:
+          - type: bind
+            source: <your_log_dir>
+            target: /var/log
+>>>>>>> 0d48ebd47a28a887868ea3093e675e95f3843561
         environment:
           - AWS_DEFAULT_REGION=us-east-1
           - BUCKET_NAME=my-certificates
@@ -133,10 +152,19 @@ want set:
         file: certboto_credentials
 
     services:
+<<<<<<< HEAD
       certboto:
         image: cisagov/certboto
         init: true
         restart: "no"
+=======
+      example:
+        image: cisagov/example:0.2.0
+        volumes:
+          - type: bind
+            source: <your_log_dir>
+            target: /var/log
+>>>>>>> 0d48ebd47a28a887868ea3093e675e95f3843561
         environment:
           - AWS_DEFAULT_REGION=us-east-1
           - BUCKET_NAME=my-certificates
@@ -164,6 +192,7 @@ want set:
     docker compose run certboto
     ```
 
+<<<<<<< HEAD
 ## Image tags ##
 
 The images of this container are tagged with
@@ -178,6 +207,68 @@ a version tag (e.g. `:0.1.4`).
 |`cisagov/certboto:edge` | The most recent image built from a merge into the `develop` branch of this repository. |
 |`cisagov/certboto:nightly` | A nightly build of the `develop` branch of this repository. |
 |`cisagov/certboto:latest`| The most recent release image pushed to a container registry.  Pulling an image using the `:latest` tag [should be avoided.](https://vsupalov.com/docker-latest-tag/) |
+=======
+### Docker ###
+
+1. Stop the running container:
+
+    ```console
+    docker stop <container_id>
+    ```
+
+1. Pull the new image:
+
+    ```console
+    docker pull cisagov/example:0.2.0
+    ```
+
+1. Recreate and run the container by following the [previous instructions](#running-with-docker).
+
+## Updating Python dependencies ##
+
+This image uses [Pipenv] to manage Python dependencies using a [Pipfile](https://github.com/pypa/pipfile).
+Both updating dependencies and changing the [Pipenv] configuration in `src/Pipfile`
+will result in a modified `src/Pipfile.lock` file that should be committed to the
+repository.
+
+> [!WARNING]
+> The `src/Pipfile.lock` as generated will fail `pre-commit` checks due to JSON formatting.
+
+### Updating dependencies ###
+
+If you want to update existing dependencies you would run the following command
+in the `src/` subdirectory:
+
+```console
+pipenv lock
+```
+
+### Modifying dependencies ###
+
+If you want to add or remove dependencies you would update the `src/Pipfile` file
+and then update dependencies as you would above.
+
+> [!NOTE]
+> You should only specify packages that are explicitly needed for your Docker
+> configuration. Allow [Pipenv] to manage the dependencies of the specified
+> packages.
+
+## Image tags ##
+
+The images of this container are tagged with [semantic
+versions](https://semver.org) of the underlying example project that they
+containerize.  It is recommended that most users use a version tag (e.g.
+`:0.2.0`).
+
+| Image:tag | Description |
+|-----------|-------------|
+|`cisagov/example:0.2.0`| An exact release version. |
+|`cisagov/example:0.2`| The most recent release matching the major and minor version numbers. |
+|`cisagov/example:0`| The most recent release matching the major version number. |
+|`cisagov/example:edge` | The most recent image built from a merge into the `develop` branch of this repository. |
+|`cisagov/example:nightly` | A nightly build of the `develop` branch of this repository. |
+|`cisagov/example:latest`| The most recent release image pushed to a container registry.  Pulling an image using the `:latest` tag [should be avoided.](https://vsupalov.com/docker-latest-tag/) |
+>>>>>>> 0d48ebd47a28a887868ea3093e675e95f3843561
 
 See the [tags tab](https://hub.docker.com/r/cisagov/certboto/tags) on Docker
 Hub for a list of all the supported tags.
@@ -235,9 +326,14 @@ Build the image locally using this git repository as the [build context](https:/
 
 ```console
 docker build \
+<<<<<<< HEAD
   --build-arg VERSION=0.1.4 \
   --tag cisagov/certboto:0.1.4 \
   https://github.com/cisagov/certboto-docker.git#develop
+=======
+  --tag cisagov/example:0.2.0 \
+  https://github.com/cisagov/example.git#develop
+>>>>>>> 0d48ebd47a28a887868ea3093e675e95f3843561
 ```
 
 ## Cross-platform builds ##
@@ -266,9 +362,14 @@ Docker:
     docker buildx build \
       --file Dockerfile-x \
       --platform linux/amd64 \
+<<<<<<< HEAD
       --build-arg VERSION=0.1.4 \
       --output type=docker \
       --tag cisagov/certboto:0.1.4 .
+=======
+      --output type=docker \
+      --tag cisagov/example:0.2.0 .
+>>>>>>> 0d48ebd47a28a887868ea3093e675e95f3843561
     ```
 
 ## AWS policies ##
@@ -374,3 +475,5 @@ dedication](https://creativecommons.org/publicdomain/zero/1.0/).
 All contributions to this project will be released under the CC0
 dedication. By submitting a pull request, you are agreeing to comply
 with this waiver of copyright interest.
+
+[Pipenv]: https://pypi.org/project/pipenv/
