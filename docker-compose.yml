@@ -19,10 +19,19 @@ services:
     init: true
     restart: "no"
     environment:
+<<<<<<< HEAD
       - AWS_DEFAULT_REGION=us-east-1
       - BUCKET_NAME=cool-test-certs
       - BUCKET_PROFILE=bucket-role
       - DNS_PROFILE=dns-role
+=======
+      - ECHO_MESSAGE=Hello World from docker compose!
+    ports:
+      - target: 8421
+        published: 8421
+        protocol: tcp
+        mode: host
+>>>>>>> 0d48ebd47a28a887868ea3093e675e95f3843561
     secrets:
       - source: credentials
         target: credentials
